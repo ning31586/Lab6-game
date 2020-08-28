@@ -18,14 +18,13 @@
       <div class="col-sm">
         <div class="row">
           <div class="col">
-            <button class="btn btn-primary" @click="start()">เริ่ม</button>
-          </div>
+            <button class="btn btn-primary" @click="start()">เริ่ม</button></div>
           <div class="col">
-            <button v-bind:disabled="end" class="btn btn-danger" @click="attack()">โจมตี</button>
-          </div>
+            <button v-bind:disabled="end" class="btn btn-danger" @click="attack()">โจมตี</button></div>
           <div class="col">
-            <button class="btn btn-light" @click="reset()">เล่นอีกครั้ง</button>
-          </div>
+            <button v-bind:disabled="end" class="btn btn-dark" @click="special()">โจมตีพิเศษ</button></div>
+          <div class="col">
+            <button class="btn btn-light" @click="reset()">เล่นอีกครั้ง</button></div>
           <br />
           <img src="https://www.nicepng.com/png/full/20-200345_street-fighter-vs-png-vs-street-fighter-logo.png"
             width="100%"
@@ -114,9 +113,22 @@ export default {
       this.amonster = this.monster[this.randomno(1, 6) - 1];
     },
     attack: function () {
-      this.player_max = Math.floor(Math.random() * 15 + 3);
+      this.player_max = Math.floor(Math.random() * 7 + 3);
       this.amonster.hp = this.amonster.hp - this.player_max;
       this.monster_max = Math.floor(Math.random() * 10 + 3);
+      this.aplayer.hp = this.aplayer.hp - this.monster_max;
+      if (this.aplayer.hp <= 0) {
+        this.aplayer.hp = 0;
+        this.end = true;
+      } else if (this.amonster.hp <= 0) {
+        this.amonster.hp = 0;
+        this.end = true;
+      }
+    },
+    special: function () {
+      this.player_max = Math.floor(Math.random() * 20 + 6);
+      this.amonster.hp = this.amonster.hp - this.player_max;
+      this.monster_max = Math.floor(Math.random() * 13 + 6);
       this.aplayer.hp = this.aplayer.hp - this.monster_max;
       if (this.aplayer.hp <= 0) {
         this.aplayer.hp = 0;
